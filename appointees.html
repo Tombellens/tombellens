@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Presidential Appointees | Tom Bellens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ── Project page overrides ── */
+        .project-hero {
+            min-height: 60vh;
+            padding-top: 8rem;
+            padding-bottom: 5rem;
+        }
+        .project-hero .hero-grain { opacity: 0.035; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+            margin-bottom: 2.5rem;
+            transition: color 0.2s, gap 0.2s;
+        }
+        .back-link:hover { color: var(--hero-text); gap: 0.75rem; }
+        .back-link i { font-size: 0.65rem; }
+
+        .project-hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            margin-bottom: 1rem;
+        }
+        .project-hero .subtitle {
+            font-size: 1.05rem;
+            color: var(--hero-muted);
+            max-width: 620px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-family: var(--font-main);
+            font-style: italic;
+        }
+        .project-hero .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+        .meta-pill i { color: var(--accent-color); font-size: 0.65rem; }
+
+        /* Stats bar */
+        .stats-bar {
+            background: var(--primary-color);
+            padding: 3rem 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            color: var(--hero-text);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+
+        /* Pipeline steps */
+        .pipeline-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .pipeline-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+        .pipeline-step:last-child { border-bottom: none; }
+        .pipeline-step:hover { background: var(--bg-alt); }
+        .step-index {
+            background: var(--bg-alt);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            padding: 1.5rem;
+        }
+        .step-body {
+            padding: 1.5rem 2rem;
+        }
+        .step-body h4 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+        .step-body p {
+            font-size: 0.875rem;
+            margin: 0;
+            color: var(--text-muted);
+        }
+        .step-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            background: rgba(79, 70, 229, 0.07);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+        .step-tag.done {
+            color: #16a34a;
+            background: rgba(22, 163, 74, 0.07);
+        }
+
+        /* Graphs */
+        .graphs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .graph-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .graph-card img {
+            width: 100%;
+            display: block;
+        }
+        .graph-caption {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .graph-caption h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 400;
+        }
+        .graph-caption p {
+            font-size: 0.82rem;
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        /* Accuracy table */
+        .accuracy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+        }
+        .accuracy-table th {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: left;
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .accuracy-table td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        .accuracy-table tr:last-child td { border-bottom: none; }
+        .accuracy-table tr:hover td { background: var(--bg-alt); }
+        .acc-high { color: #16a34a; font-weight: 600; font-family: var(--font-mono); font-size: 0.85rem; }
+        .acc-med { color: #ca8a04; font-weight: 600; font-family: var(--font-mono); font-size: 0.85rem; }
+
+        /* Outputs */
+        .output-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+        }
+        .output-icon {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            padding-top: 0.1rem;
+            flex-shrink: 0;
+        }
+        .output-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .output-card p { font-size: 0.875rem; margin: 0; color: var(--text-muted); }
+        .output-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+        .output-tag.progress { color: var(--accent-color); background: rgba(79, 70, 229, 0.07); }
+        .output-tag.planned { color: var(--text-muted); background: var(--bg-color); border: 1px solid var(--border-color); }
+
+        /* RQ box */
+        .rq-box {
+            background: var(--bg-alt);
+            border-left: 3px solid var(--accent-color);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .rq-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .rq-box p { margin: 0; font-style: italic; }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .graphs-grid { grid-template-columns: 1fr; }
+            .pipeline-step { grid-template-columns: 60px 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#education">CV</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero project-hero">
+        <div class="hero-grain"></div>
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+        <div class="container">
+            <a href="index.html#projects" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> All Projects
+            </a>
+            <h1>U.S. Presidential<br>Appointees</h1>
+            <p class="subtitle">A fully automated pipeline to build a comprehensive dataset of 21st-century presidential appointees and their career backgrounds.</p>
+            <div class="meta-row">
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> MIT Gov Lab</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> FWO Travel Grant</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> Writing Up</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> 2025</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">3,554</div>
+                    <div class="stat-label">Appointees Profiled</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12,536</div>
+                    <div class="stat-label">Career Positions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Administrations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">~95%</div>
+                    <div class="stat-label">Pipeline Accuracy</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Overview</span>
+                <h2>About the Project</h2>
+                <p>In each administration, roughly 4,000 individuals are appointed by the U.S. president to senior executive positions — from cabinet secretaries to agency heads and senior deputies. These appointees are central to questions of democratic accountability, bureaucratic competence, and the relationship between political elites and the state. Yet existing datasets are either narrow in scope or limited to a small set of variables, because collecting this information has historically been slow, expensive, and prone to error.</p>
+                <p>This project constructs a comprehensive biographical dataset of Senate-confirmed presidential appointees serving from the second George W. Bush administration through the Biden administration. Starting from the <em>Plum Book</em> — the official government directory published at the end of each presidential term — a fully automated pipeline integrating web scraping, Large Language Models, and NLP techniques collects and structures demographic, educational, and career information for each individual at scale.</p>
+
+                <div class="rq-box">
+                    <span class="rq-label">Substantive Research Question</span>
+                    <p>"To what extent do populists' appointments to top civil service positions reflect their populist rhetoric?"</p>
+                </div>
+
+                <p>Beyond the dataset itself, the project aims to test theoretical hypotheses about how populist administrations differ from their predecessors along three axes: <strong>anti-elitism</strong> (elite university attendance, seniority of prior positions), <strong>anti-bureaucracy</strong> (public sector experience, administrative training), and <strong>patronage</strong> (the social network structure of insider appointments).</p>
+                <p>This project is a collaboration with <strong>Dr. Lula Chen</strong> (MIT Gov Lab), who co-developed the pipeline and co-authors all outputs arising from the project.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Methodology</span>
+                <h2>A Five-Step Automated Pipeline</h2>
+                <p>All biographical information is publicly available but scattered across government directories, congressional records, news archives, agency websites, and LinkedIn profiles. The pipeline integrates these sources into a single, structured, and validated dataset.</p>
+            </div>
+
+            <div class="pipeline-grid animate-on-scroll">
+                <div class="pipeline-step">
+                    <div class="step-index">1</div>
+                    <div class="step-body">
+                        <span class="step-tag done">Complete</span>
+                        <h4>Plum Book Parsing</h4>
+                        <p>Plum Book PDFs (2008–2024) are downloaded from the official government repository, split page-by-page, and processed by GPT-4o to extract structured appointment records — position title, department, location, appointment type, and incumbent name. Yields 7,800–10,000 rows per edition.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-index">2</div>
+                    <div class="step-body">
+                        <span class="step-tag done">Complete</span>
+                        <h4>Senate Nomination Matching</h4>
+                        <p>Each Plum Book entry is linked to the corresponding Senate confirmation record via the Congress.gov API (107th–119th Congresses). An embedding-based candidate search narrows the field to the top-5 matches per entry; a GPT-4o-mini "judge" model then selects the best match or rejects all candidates. Matching precision is near 100%, recall between 80–90%.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-index">3</div>
+                    <div class="step-body">
+                        <span class="step-tag done">Complete</span>
+                        <h4>Career Data Collection</h4>
+                        <p>For each matched appointee, a Google Custom Search query retrieves the top-5 relevant web pages. After HTML cleaning with BeautifulSoup and relevance filtering with GPT-4o-mini, an ensemble of three models (GPT-4o, Claude Haiku, Gemini 2.0) independently extracts demographic, educational, and career information. A final GPT-4o "judge" aggregates and reconciles the nine outputs into three structured JSON objects per individual.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-index">4</div>
+                    <div class="step-body">
+                        <span class="step-tag done">Complete</span>
+                        <h4>Annotation &amp; Labeling</h4>
+                        <p>Career positions are labeled by sector (public, private, NGO, academia, military, etc.) and policy area using a RAG-based pipeline: a GPT-generated description of each employer organisation informs a classification call against a CoREx-derived codebook covering 15 sectors and 16 policy areas. Education records are normalized by field of study and degree type.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-index">5</div>
+                    <div class="step-body">
+                        <span class="step-tag done">Complete</span>
+                        <h4>Manual Validation</h4>
+                        <p>A stratified random sample of outputs is cross-checked against primary sources. Validation results are reported per variable and per pipeline stage to provide future users with a transparent picture of data quality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Validation -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Validation</span>
+                <h2>Pipeline Accuracy</h2>
+                <p>Extraction accuracy has been validated on stratified random samples. Demographic and education fields perform near-perfectly; career fields show strong precision and recall across all subfields.</p>
+            </div>
+
+            <div class="animate-on-scroll" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <div>
+                    <p style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem;">Demographic Extraction</p>
+                    <table class="accuracy-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Birth Year</td><td class="acc-high">0.989</td><td class="acc-high">1.000</td><td class="acc-high">0.994</td></tr>
+                            <tr><td>Birthplace</td><td class="acc-high">0.955</td><td class="acc-high">0.988</td><td class="acc-high">0.971</td></tr>
+                            <tr><td>Gender</td><td class="acc-high">0.965</td><td class="acc-high">0.943</td><td class="acc-high">0.953</td></tr>
+                            <tr><td>Ethnicity</td><td class="acc-high">1.000</td><td class="acc-high">1.000</td><td class="acc-high">1.000</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <p style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem;">Career Field Extraction</p>
+                    <table class="accuracy-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Start Year</td><td class="acc-high">0.954</td><td class="acc-high">0.997</td><td class="acc-high">0.975</td></tr>
+                            <tr><td>End Year</td><td class="acc-high">0.964</td><td class="acc-high">1.000</td><td class="acc-high">0.982</td></tr>
+                            <tr><td>Position Title</td><td class="acc-high">0.955</td><td class="acc-high">0.945</td><td class="acc-high">0.950</td></tr>
+                            <tr><td>Workplace</td><td class="acc-high">0.956</td><td class="acc-med">0.938</td><td class="acc-high">0.947</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preliminary Results -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Preliminary Results</span>
+                <h2>First Descriptive Findings</h2>
+                <p>With data collection complete across Steps 1–3, initial descriptive patterns are already visible. The figures below show the gender composition and ethnic diversity of presidential appointees across six administrations, illustrating both long-run trends and the sharp discontinuity associated with the Trump administration.</p>
+            </div>
+
+            <div class="graphs-grid animate-on-scroll">
+                <div class="graph-card">
+                    <img src="img/gender_US_appoint.png" alt="Gender distribution of U.S. presidential appointees by administration">
+                    <div class="graph-caption">
+                        <h4>Gender Distribution by Administration</h4>
+                        <p>The share of female appointees has grown steadily since Bush Jr., peaking under Biden — where female appointees (≈220) nearly matched male appointees (≈260). The Trump administration marks a clear reversal of this trend, with the largest gender gap since the second Bush term.</p>
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <img src="img/ethnicity_US_appointees.png" alt="Ethnic diversity of U.S. presidential appointees by administration">
+                    <div class="graph-caption">
+                        <h4>Ethnic Diversity by Administration</h4>
+                        <p>The proportion of non-white appointees increased substantially under Obama (≈6%) and reached its highest level under Biden (≈10%), driven primarily by growth in Black/African American and Latino/Hispanic appointees. Ethnic diversity dropped sharply under Trump (≈2.3%), returning to levels below those of the Bush years.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planned Outputs -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Outputs</span>
+                <h2>Planned Publications</h2>
+            </div>
+
+            <div class="animate-on-scroll">
+                <div class="output-card">
+                    <div class="output-icon"><i class="fa-regular fa-file-lines"></i></div>
+                    <div>
+                        <span class="output-tag progress">Writing Up</span>
+                        <h4>Research Note — Data and Methodology</h4>
+                        <p>A 4,000–5,000 word research note describing the full pipeline, reporting validation results, and presenting a first descriptive overview of appointee backgrounds across administrations. Designed to serve as a reference for future users of the dataset.</p>
+                    </div>
+                </div>
+
+                <div class="output-card">
+                    <div class="output-icon"><i class="fa-regular fa-newspaper"></i></div>
+                    <div>
+                        <span class="output-tag planned">Planned</span>
+                        <h4>Substantive Paper — Populism and Bureaucracy</h4>
+                        <p>A theory-testing paper examining whether populist administrations appoint differently from their non-populist predecessors. Tests three hypothesis clusters — anti-elitism, anti-bureaucracy, and patronage — using the full biographical dataset and a comparative design spanning the Bush, Obama, Trump, and Biden administrations.</p>
+                    </div>
+                </div>
+
+                <div class="output-card">
+                    <div class="output-icon"><i class="fa-regular fa-book"></i></div>
+                    <div>
+                        <span class="output-tag done" style="color: #16a34a; background: rgba(22, 163, 74, 0.07);">Complete</span>
+                        <h4>Handbook Chapter — CoREx (USA, 2024 cohort)</h4>
+                        <p>A country chapter on the United States for the COST CoREx comparative handbook, following the shared template and codebook. Covers the institutional structure of top-level executive positions and a descriptive analysis of the 2024 cohort of appointees.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="background: var(--primary-color); padding: 3rem 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+            <div>
+                <p style="font-family: var(--font-display); font-size: 1.25rem; color: var(--hero-text); margin-bottom: 0.25rem;">Tom Bellens</p>
+                <p style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hero-muted); margin: 0;">KU Leuven · Political Science</p>
+            </div>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="index.html" style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hero-muted);">Back to Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

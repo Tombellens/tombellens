@@ -1,84 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhD Project - Tom Bellens</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400&family=Helvetica:wght@300&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhD Research | Tom Bellens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .project-hero {
+            min-height: 65vh;
+            padding-top: 8rem;
+            padding-bottom: 5rem;
+        }
+        .project-hero .hero-grain { opacity: 0.035; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+            margin-bottom: 2.5rem;
+            transition: color 0.2s, gap 0.2s;
+        }
+        .back-link:hover { color: var(--hero-text); gap: 0.75rem; }
+        .back-link i { font-size: 0.65rem; }
+
+        .hero-layout { display: block; }
+
+        .project-hero h1 {
+            font-size: clamp(2.75rem, 6vw, 5rem);
+            margin-bottom: 0.75rem;
+            line-height: 1.05;
+        }
+
+        .thesis-sub {
+            font-family: var(--font-main);
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--hero-muted);
+            max-width: 580px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+        .meta-pill i { color: var(--accent-color); font-size: 0.65rem; }
+
+        .cover-wrap img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 180px;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Cover section */
+        .cover-section {
+            background: var(--bg-color);
+            padding: 4rem 0;
+        }
+        .cover-section img {
+            max-width: 900px;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            margin: 0 auto;
+        }
+
+        /* Stats */
+        .stats-bar { background: var(--primary-color); padding: 3rem 0; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            color: var(--hero-text);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+
+        /* RQ callout */
+        .rq-box {
+            background: var(--primary-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
+        }
+        .rq-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .rq-box p {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--hero-text);
+            font-style: italic;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Chapters */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .chapter-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .chapter-num {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+        .chapter-card h3 { font-size: 1.1rem; color: var(--primary-color); line-height: 1.25; }
+        .chapter-card p { font-size: 0.875rem; line-height: 1.65; margin: 0; }
+        .chapter-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.5rem; }
+
+        /* Findings */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .finding-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+        }
+        .finding-stat {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .finding-card p { font-size: 0.875rem; margin: 0; line-height: 1.6; }
+
+        /* Publications */
+        .pub-list { list-style: none; padding: 0; }
+        .pub-item {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 2.5rem;
+            padding: 1.75rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .pub-item:last-child { border-bottom: 1px solid var(--border-color); }
+        .pub-meta { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.15rem; }
+        .pub-year { font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-color); font-weight: 500; }
+        .pub-venue { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+        .pub-content h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.4rem; font-weight: 400; color: var(--primary-color); }
+        .pub-content p { font-size: 0.9rem; }
+
+        @media (max-width: 960px) {
+            .hero-layout { grid-template-columns: 1fr; }
+            .cover-wrap { display: none; }
+            .chapters-grid { grid-template-columns: 1fr; }
+            .findings-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .findings-grid { grid-template-columns: 1fr; }
+            .pub-item { grid-template-columns: 1fr; gap: 0.25rem; }
+            .pub-meta { flex-direction: row; gap: 1rem; align-items: baseline; }
+        }
+    </style>
 </head>
+
 <body>
-<header>
-  <div class="header-content">
-    <h1>PhD Project</h1>
-    <h4>Career Trajectories of Ministerial Advisers in Belgium (2000–2020)</h4>
-  </div>
-</header>
-<nav>
-  <ul>
-    <li><a href="#intro">Introduction</a></li>
-    <li><a href="#theory">Theoretical Framework</a></li>
-    <li><a href="#methodology">Methodology</a></li>
-    <li><a href="#papers">Papers</a></li>
-    <li><a href="#publications">Publications</a></li>
-  </ul>
-</nav>
 
-<section id="intro">
-  <h2>Introduction</h2>
-  <p>My PhD dissertation explores the career trajectories of Belgian ministerial advisers from 2000 to 2020. Ministerial advisers, key figures within the Napoleonic governance system, occupy influential roles, yet their careers remain underexplored. By analyzing their paths, this research seeks to understand their position in the executive triangle and uncover whether ministerial offices operate in a more partitocratic or technocratic manner.</p>
-</section>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#education">CV</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-<section id="theory">
-  <h2>Theoretical Framework</h2>
-  <p>At the core of the dissertation is a central question: Are Belgian ministerial offices partitocratic or technocratic institutions? This tension frames the entire research. The partitocratic perspective emphasizes the political loyalty of advisers as extensions of political parties. In contrast, the technocratic perspective sees these advisers as bureaucratic experts who navigate between the political and administrative worlds. This study addresses these perspectives, building on both public administration and political science literature.</p>
-</section>
+    <!-- Hero -->
+    <header class="hero project-hero">
+        <div class="hero-grain"></div>
+        <div class="container">
+            <a href="index.html#projects" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            <div class="hero-layout">
+                <h1>In and Out the Centre of Executive Power</h1>
+                <p class="thesis-sub">A Text-as-Data Approach to Belgian Ministerial Advisers and their Careers
+                    (1999–2020)</p>
+                <div class="meta-row">
+                    <span class="meta-pill"><i class="fas fa-university"></i> KU Leuven</span>
+                    <span class="meta-pill"><i class="fas fa-graduation-cap"></i> PhD defended 2025</span>
+                    <span class="meta-pill"><i class="fas fa-user"></i> Supervisor: Marleen Brans</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<section id="methodology">
-  <h2>Methodology</h2>
-  <p>To tackle these research questions, we gather career data from ministerial advisers at the federal, Flemish, and Walloon levels of government. The methodology combines traditional approaches with innovative NLP techniques. We leverage prosopography, sequence analysis, and text-as-data methods to model career trajectories, bridging an empirical gap in the field. Our use of large-scale career data collection tools allows us to track the inflow, through-flow, and outflow phases of ministerial careers.</p>
-</section>
+    <!-- Stats bar -->
+    <div class="stats-bar animate-on-scroll">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1,521</div>
+                    <div class="stat-label">Advisers Studied</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">11,935</div>
+                    <div class="stat-label">Career Positions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">21</div>
+                    <div class="stat-label">Years Covered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Publications</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<section id="papers">
-  <h2>Papers</h2>
-  <p><strong>1. A Career Dataset of Flemish Ministerial Advisers (1999-2020)</strong></p>
-  <p>This paper presents the dataset and tools developed for collecting and analyzing career data on 754 Flemish advisers. It discusses the data collection methodology and basic findings.</p>
+    <!-- Overview -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="overview-grid animate-on-scroll">
+                <div>
+                    <span class="section-label">Overview</span>
+                    <h2>About the Dissertation</h2>
+                    <p>Ministerial advisers occupy a critical but largely invisible position at the heart of executive
+                        power. Sitting between the political minister and the civil service, they shape the advice that
+                        informs government decisions — yet we know surprisingly little about who they are, how they are
+                        recruited, and where they end up after leaving office.</p>
+                    <p>This dissertation addresses these gaps by studying the full career trajectories of 1,521
+                        ministerial advisers who served in Belgian ministerial cabinets between 1999 and 2020. Rather
+                        than relying on surveys or interviews, it takes a <strong>text-as-data approach</strong> —
+                        building a novel software pipeline that collects, structures, and analyses career data from
+                        online sources at scale, and applies NLP methods to study adviser behaviour in the media.</p>
 
-  <p><strong>2. Partitocracy or Technocracy? A Resource-Based Perspective</strong></p>
-  <p>This paper explores the recruitment patterns of ministerial advisers in Flanders, examining the role of political loyalty versus technical expertise in their appointments.</p>
+                    <div class="rq-box">
+                        <span class="rq-label">Central Research Question</span>
+                        <p>"To what extent can Belgian ministerial cabinets be characterised as partitocratic or
+                            technocratic?"</p>
+                    </div>
 
-  <p><strong>3. Charting the Roles and Careers of Ministerial Advisors: A Data-Driven Approach Using NLP</strong></p>
-  <p>This paper introduces an NLP-based approach to study the roles of advisers, categorizing them based on their political-neutral alignment and generalist-specialist roles.</p>
+                    <p>The dissertation approaches this question through three lenses —
+                        <strong>recruitment</strong>, <strong>roles</strong>, and <strong>post-cabinet careers</strong>
+                        — building towards a coherent picture of how ministerial cabinets function and what they reveal
+                        about the relationship between politics and expertise in Belgian governance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <p><strong>4. Modeling Career Trajectories of Ministerial Advisers: A Markov Chain Approach</strong></p>
-  <p>This paper applies Markov Chains to map the career flows of federal and Flemish advisers, revealing the transition dynamics within the political and administrative spheres.</p>
+    <!-- Chapters -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Structure</span>
+            <h2 class="animate-on-scroll">The Four Studies</h2>
+            <div class="chapters-grid stagger-children">
 
-  <p><strong>5. Studying the Post-Cabinet Careers of Belgian Ministerial Advisers</strong></p>
-  <p>This final paper focuses on the outflow of ministerial advisers and explores their career paths after leaving office, particularly in the Walloon region.</p>
-</section>
+                <div class="chapter-card">
+                    <span class="chapter-num">Study 1</span>
+                    <h3>A Career Dataset of Flemish Ministerial Advisors</h3>
+                    <p>Building a novel dataset of 754 ministerial advisers and 5,828 career positions from online
+                        sources. Introduces the software pipeline — combining web scraping, BERT-based coding
+                        assistance, and manual validation — that underpins the rest of the dissertation.</p>
+                    <div class="chapter-tags">
+                        <span class="tag">Dataset</span>
+                        <span class="tag">Web Scraping</span>
+                        <span class="tag">BERT</span>
+                        <span class="tag">Career Data</span>
+                    </div>
+                </div>
 
-<section id="publications">
-  <h2>Presentations & Publications</h2>
-  <ul>
-    <li>Pickering, H., Bellens, T. (2021). The Prime Minister’s Chief of Staff: A profile from Westminster countries. Presented at ECPR General Conference, 2021.</li>
-    <li>Bellens, T., Brans, M. (2023). A prosopographical software package. Presented at Politicologenetmaal, 2023.</li>
-    <li>Bellens, T. & Brans, M. (2024). Charting the Roles and Careers of Ministerial Advisors: A Data-Driven Approach Using NLP. Presented at ECPR General Conference, 2024.</li>
-    <li>Bellens, T. (2024). A Career Dataset of Flemish Ministerial Advisers (1999-2020). Presented at APSA General Conference, 2024.</li>
-    <li>Pickering, H., Bellens, T., Brans, M. (2023). The Prime Minister's Chief of Staff: Comparing profiles and trends in Westminster democracies, 1990–2021. Published in Governance.</li>
-  </ul>
-</section>
+                <div class="chapter-card">
+                    <span class="chapter-num">Study 2</span>
+                    <h3>Insiders, Outsiders, and Ideology: Explaining Recruitment Patterns</h3>
+                    <p>Who gets recruited into ministerial cabinets — political insiders or technical experts? This
+                        study shows that both models coexist, and that the balance between them is shaped by a
+                        party's ideological position and its access to political resources.</p>
+                    <div class="chapter-tags">
+                        <span class="tag">Recruitment</span>
+                        <span class="tag">Ideology</span>
+                        <span class="tag">Multilevel Models</span>
+                        <span class="tag">Partitocracy</span>
+                    </div>
+                </div>
 
-<script>
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
-    });
-  });
-</script>
-<script src="app.js"></script>
+                <div class="chapter-card">
+                    <span class="chapter-num">Study 3</span>
+                    <h3>Between Politics and Policy: Partisanship and Expertise in Action</h3>
+                    <p>Going beyond career backgrounds to ask whether advisers actually behave in partisan ways.
+                        Using a fine-tuned language model applied to a large media corpus, this study finds that
+                        39% of advisers appear in partisan contexts — and that career background is a significant,
+                        if modest, predictor.</p>
+                    <div class="chapter-tags">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Media Analysis</span>
+                        <span class="tag">BERT</span>
+                        <span class="tag">Partisanship</span>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <span class="chapter-num">Study 4</span>
+                    <h3>The Ministerial Cabinet as a Stepping Stone?</h3>
+                    <p>Does serving as a ministerial adviser lead to better career outcomes? This study develops a
+                        novel LLM-based algorithm that ranks the prestige of post-cabinet positions, finding that
+                        cabinet service does function as a stepping stone — though the degree to which depends
+                        heavily on party affiliation.</p>
+                    <div class="chapter-tags">
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Career Progression</span>
+                        <span class="tag">Ranking Algorithm</span>
+                        <span class="tag">Post-Cabinet</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Findings -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Results</span>
+            <h2 class="animate-on-scroll">Key Findings</h2>
+            <div class="findings-grid animate-on-scroll">
+                <div class="finding-card">
+                    <div class="finding-stat">45%</div>
+                    <p>of Flemish ministerial advisers held a partisan position prior to entering the cabinet —
+                        suggesting the partitocratic model holds, but far from exclusively.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-stat">39%</div>
+                    <p>of advisers appeared in partisan contexts in media coverage — a minimum estimate that
+                        closely mirrors the career-based partisanship figure, validating the approach.</p>
+                </div>
+                <div class="finding-card">
+                    <div class="finding-stat">Both</div>
+                    <p>the partitocratic and technocratic models hold simultaneously in Belgium — recruitment
+                        and behaviour reflect an ongoing tension between political loyalty and administrative
+                        expertise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Academic Output</span>
+            <h2 class="animate-on-scroll">Publications</h2>
+            <ul class="pub-list animate-on-scroll">
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">Accepted</span>
+                        <span class="pub-venue">PSR</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Stepping Stones or Party Placements? An LLM-based Ranking Algorithm of Ministerial
+                            Advisers' Post-Cabinet Careers</h3>
+                        <p><strong>Bellens, T.</strong>, Meert, A., Brans, M. — <em>Political Studies Review</em>.</p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">EPS</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>A Career Dataset of Flemish Ministerial Advisors (1999–2020) Leveraging Online Data
+                            Sources</h3>
+                        <p><strong>Bellens, T.</strong>, Bellens, J., Brans, M. — <em>European Political
+                                Science</em>. doi:&nbsp;<a href="https://doi.org/10.1057/s41304-025-00526-8"
+                                target="_blank">10.1057/s41304-025-00526-8</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">PLC</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Resources and Ideology in Ministerial Adviser Recruitment: A Dynamic Model of Flemish
+                            Ministerial Cabinets (1999–2020)</h3>
+                        <p><strong>Bellens, T.</strong>, Brans, M. — <em>Politics of the Low Countries</em>.
+                            doi:&nbsp;<a href="https://doi.org/10.54195/plc.21498"
+                                target="_blank">10.54195/plc.21498</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2023</span>
+                        <span class="pub-venue">Governance</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>The Prime Minister's Chief of Staff: Comparing Profiles and Trends in Westminster
+                            Democracies, 1990–2021</h3>
+                        <p>Pickering, H., <strong>Bellens, T.</strong>, Brans, M. — <em>Governance</em>.
+                            doi:&nbsp;<a href="https://doi.org/10.1111/gove.12834"
+                                target="_blank">10.1111/gove.12834</a></p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section style="background: var(--hero-bg); padding: var(--section-spacing) 0;">
+        <footer>
+            <div class="container" style="text-align: center;">
+                <span class="section-label" style="color: rgba(99,102,241,0.75);">Say Hello</span>
+                <h2 style="color: var(--hero-text); margin-bottom: 0.5rem;">Get in Touch</h2>
+                <p style="color: var(--hero-muted);">Interested in this research or potential collaboration?</p>
+                <div class="social-links">
+                    <a href="mailto:tom.bellens@kuleuven.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/Tombellens" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/tombellens/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">&copy; 2026 Tom Bellens. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <script src="app.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLMs for Career Data | Tom Bellens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ── Project page overrides ── */
+        .project-hero {
+            min-height: 60vh;
+            padding-top: 8rem;
+            padding-bottom: 5rem;
+        }
+        .project-hero .hero-grain { opacity: 0.035; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+            margin-bottom: 2.5rem;
+            transition: color 0.2s, gap 0.2s;
+        }
+        .back-link:hover { color: var(--hero-text); gap: 0.75rem; }
+        .back-link i { font-size: 0.65rem; }
+
+        .project-hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            margin-bottom: 1rem;
+        }
+        .project-hero .subtitle {
+            font-size: 1.05rem;
+            color: var(--hero-muted);
+            max-width: 640px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-family: var(--font-main);
+            font-style: italic;
+        }
+        .project-hero .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+        .meta-pill i { color: var(--accent-color); font-size: 0.65rem; }
+
+        /* Stats bar */
+        .stats-bar {
+            background: var(--primary-color);
+            padding: 3rem 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            color: var(--hero-text);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+
+        /* Three tasks */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .task-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+        }
+        .task-num {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            opacity: 0.25;
+            line-height: 1;
+            margin-bottom: 0.75rem;
+        }
+        .task-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+        .task-card p { font-size: 0.875rem; color: var(--text-muted); margin: 0; }
+
+        /* Model families */
+        .model-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .model-card {
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-color);
+        }
+        .model-family-label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .model-card h4 { font-size: 0.9rem; margin-bottom: 0.35rem; }
+        .model-card p { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+        .model-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+        }
+        .model-list li {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            padding: 0.15rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .model-list li:last-child { border-bottom: none; }
+
+        /* Results graphs */
+        .graphs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .graph-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .graph-card img {
+            width: 100%;
+            display: block;
+            background: white;
+        }
+        .graph-card.full-width {
+            grid-column: 1 / -1;
+        }
+        .graph-caption {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .graph-caption h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 400;
+        }
+        .graph-caption p {
+            font-size: 0.82rem;
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        /* Finding highlights */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .finding-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background: var(--bg-color);
+        }
+        .finding-stat {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .finding-card h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+        .finding-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+        /* Outputs */
+        .output-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+        }
+        .output-icon {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            padding-top: 0.1rem;
+            flex-shrink: 0;
+        }
+        .output-card h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .output-card p { font-size: 0.875rem; margin: 0; color: var(--text-muted); }
+        .output-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+        .output-tag.progress { color: var(--accent-color); background: rgba(79, 70, 229, 0.07); }
+        .output-tag.done { color: #16a34a; background: rgba(22, 163, 74, 0.07); }
+
+        /* Abstract toggle */
+        .abstract-toggle { margin-top: 0.75rem; }
+        .abstract-toggle summary {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            cursor: pointer;
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .abstract-toggle summary::before {
+            content: '▶';
+            font-size: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .abstract-toggle[open] summary::before { transform: rotate(90deg); }
+        .abstract-toggle p {
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+            border-left: 2px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .tasks-grid { grid-template-columns: 1fr; }
+            .model-row { grid-template-columns: repeat(2, 1fr); }
+            .graphs-grid { grid-template-columns: 1fr; }
+            .findings-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#education">CV</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero project-hero">
+        <div class="hero-grain"></div>
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+        <div class="container">
+            <a href="index.html#projects" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> All Projects
+            </a>
+            <h1>LLMs for<br>Career Data</h1>
+            <p class="subtitle">A systematic benchmark evaluating NLP tools and Large Language Models for the automated collection, extraction, and annotation of political career trajectories.</p>
+            <div class="meta-row">
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> CoREx COST Action</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> University of Antwerp</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> PolMeth Europe 2026</span>
+                <span class="meta-pill"><i class="fa-solid fa-circle-dot"></i> 2025–2026</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">7,000+</div>
+                    <div class="stat-label">Gold-Standard Elites</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">35</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Models Benchmarked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Pipeline Stages</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Overview</span>
+                <h2>About the Project</h2>
+                <p>Since the <em>Prosopographia Imperii Romani</em> — the first collective biography of Roman elites, whose final volume appeared only in 2015, a century after work began — scholars have faced the same fundamental bottleneck: gathering biographical data on political elites is slow, expensive, and labour-intensive. Large Language Models and NLP offer the potential to transform this process, but the discipline still lacks shared benchmarks to evaluate how well these tools actually perform.</p>
+                <p>This project introduces a benchmark framework for the automated reconstruction of political career trajectories, built on the <strong>CoREx</strong> gold-standard corpus — a manually curated, multilingual dataset covering career, educational and demographic information on over 7,000 political elites across 35 countries. Benchmarking is structured around three analytically distinct pipeline stages, and a range of model families are evaluated across each stage against precision, recall, and F1 metrics.</p>
+                <p>The open-source code repository and evaluation library are designed so that results from future work can be directly compared to the baselines reported here, providing a reproducible foundation for the field. The paper was prepared for delivery at the <strong>PolMeth Europe 2026</strong> Conference at Trinity College Dublin.</p>
+                <p>This is a collaborative project with <strong>Bastián González-Bustamante</strong> (Leiden University), <strong>Anne Bellon</strong> (UTC Compiègne), <strong>Levent Demirelli</strong> (Istanbul Beykent University), <strong>Jan-Hinrik Meyer-Sahling</strong> (University of Nottingham), and <strong>Fanni Toth</strong> (Loughborough University) — all members of CoREx Working Group 2.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three tasks -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Framework</span>
+                <h2>Three Benchmark Tasks</h2>
+                <p>The pipeline for constructing elite background datasets can be decomposed into three analytically distinct stages, each evaluated independently to isolate where performance is gained or lost.</p>
+            </div>
+            <div class="tasks-grid animate-on-scroll">
+                <div class="task-card">
+                    <div class="task-num">01</div>
+                    <h3>Data Collection</h3>
+                    <p>Given a list of individuals — name, position, country, year — can a system reliably identify webpages containing relevant biographical information? Evaluated using precision and recall on retrieved URLs against a human-curated gold standard. Tests whether Google CSE queries with LLM-based filtering outperform simple keyword search.</p>
+                </div>
+                <div class="task-card">
+                    <div class="task-num">02</div>
+                    <h3>Data Extraction</h3>
+                    <p>Given unstructured biographical text and a predefined schema, can a system accurately extract structured career records? Evaluated separately for atomic attributes (birth year, gender, birthplace) and composite attributes (career history, education history). Performance reported at record level using precision and recall.</p>
+                </div>
+                <div class="task-card">
+                    <div class="task-num">03</div>
+                    <h3>Data Annotation</h3>
+                    <p>Given an already-extracted career position, can a system correctly assign the right sector or policy area label from a standardised codebook? Evaluated using accuracy, macro F1, and weighted F1. An additional semantic similarity metric based on BERT embeddings captures graded proximity between incorrect predictions and the gold label.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Models</span>
+                <h2>Four Model Families</h2>
+                <p>Twelve model configurations spanning four families are benchmarked, enabling systematic comparison of performance, cost, and robustness across pipeline stages.</p>
+            </div>
+            <div class="model-row animate-on-scroll">
+                <div class="model-card">
+                    <span class="model-family-label">Encoder-based</span>
+                    <h4>Fine-tuned Transformers</h4>
+                    <p>Supervised classification using BERT-style architectures, fine-tuned on a training split of the CoREx gold standard.</p>
+                    <ul class="model-list">
+                        <li>BERT-EN</li>
+                        <li>XLM-RoBERTa</li>
+                        <li>mBERT</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <span class="model-family-label">Open-Source LLMs</span>
+                    <h4>Zero/Few-Shot Generative</h4>
+                    <p>Open-weight generative models evaluated in zero-shot and few-shot prompting configurations.</p>
+                    <ul class="model-list">
+                        <li>GPT-OSS 20B</li>
+                        <li>Llama 3.3 70B</li>
+                        <li>Qwen3 80B</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <span class="model-family-label">Closed LLMs</span>
+                    <h4>Proprietary APIs</h4>
+                    <p>Closed-source frontier models accessed via API, evaluated with standardised prompt templates.</p>
+                    <ul class="model-list">
+                        <li>Claude Opus 4.6</li>
+                        <li>GPT-4o</li>
+                        <li>GPT-5.3</li>
+                        <li>Gemini 2.5 Flash</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <span class="model-family-label">RAG Systems</span>
+                    <h4>Retrieval-Augmented</h4>
+                    <p>LLMs augmented with retrieved context — codebook descriptions, institutional definitions — to ground classification decisions.</p>
+                    <ul class="model-list">
+                        <li>RAG-Embeddings</li>
+                        <li>RAG-WebSearch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Preliminary Results</span>
+                <h2>First Benchmark Graphs</h2>
+                <p>Experiments are ongoing and results are preliminary. The graphs below show early performance data on the career annotation task — classifying positions into broad sectors (9 classes) and mapping F1 scores per class across model families. Further experimentation is underway before conclusions are drawn.</p>
+            </div>
+
+            <div class="graphs-grid animate-on-scroll" style="margin-top: 2rem;">
+                <div class="graph-card">
+                    <img src="img/career_broad.png" alt="Model performance on broad sector annotation (9 classes)">
+                    <div class="graph-caption">
+                        <h4>Broad Sector Annotation (9 Classes)</h4>
+                        <p>Accuracy, Macro F1, and Weighted F1 across all model families. RAG-Embeddings achieves the highest overall accuracy (0.80), while encoder-based models lead on Macro F1 (0.67 for BERT-EN). Generative LLMs in zero-shot lag behind both.</p>
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <img src="img/per_class_acc.png" alt="Per-class F1 heatmap across models and broad sectors">
+                    <div class="graph-caption">
+                        <h4>Per-Class F1 — Broad Sectors × Model</h4>
+                        <p>Heatmap of F1 scores per sector per model. Legislature and Judiciary/Courts are most consistently well-classified across all models. Civil Society/NGO and International Organisations remain the hardest categories, where most models score near zero.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outputs -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <span class="section-label">Outputs</span>
+                <h2>Publications &amp; Resources</h2>
+            </div>
+            <div class="animate-on-scroll">
+                <div class="output-card">
+                    <div class="output-icon"><i class="fa-regular fa-calendar"></i></div>
+                    <div>
+                        <span class="output-tag progress">Upcoming</span>
+                        <h4>PolMeth Europe 2026 — Conference Presentation</h4>
+                        <p>Trinity College Dublin, May 14–16, 2026. Bastián González-Bustamante will present the benchmark framework and preliminary results to the European political methodology community.</p>
+                        <details class="abstract-toggle">
+                            <summary>Read Abstract</summary>
+                            <p>From the beginning of political science as a discipline, scholars have devoted considerable effort to understanding who political elites are. Studies of their career paths, educational trajectories, and demographic profiles have long formed the empirical backbone of research across political science, public policy and related disciplines such as sociology. Recent technological and methodological advances, particularly Large Language Models (LLMs) and related Natural Language Processing (NLP) tools, now make it possible to automate, or at least accelerate through semi-automation, the traditionally labour-intensive and time-consuming processes of collecting, cleaning and annotating such data. Despite the rapid adoption of these tools, the discipline still lacks shared benchmarks for evaluating their use in a systematic, reliable and reproducible manner. This paper introduces a benchmark framework for the automated reconstruction of political career trajectories around three key subtasks: (i) data collection, assessing methods for identifying and retrieving relevant bibliographic sources across countries and languages; (ii) data extraction, evaluating techniques that transform unstructured text into structured career records; and (iii) data labelling, benchmarking the mapping of extracted entities into standardised ontologies of career sectors, educational degrees and partisan affiliations. Using the novel, manually compiled CoREx corpus as a gold-standard dataset containing career, educational and demographic information on over 7,000 individuals across more than 30 countries, this paper defines task specifications, annotation guidelines and evaluation metrics for each subtask. It further tests several baseline models and reports their performance.</p>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="output-card">
+                    <div class="output-icon"><i class="fa-regular fa-file-lines"></i></div>
+                    <div>
+                        <span class="output-tag planned" style="color: var(--text-muted); background: var(--bg-color); border: 1px solid var(--border-color);">Planned</span>
+                        <h4>Journal Article — Coming Soon</h4>
+                        <p>Bellens, T., González-Bustamante, B., Bellon, A., Demirelli, L., Meyer-Sahling, J., &amp; Toth, F. A full paper expanding the benchmark framework with complete experimental results across all pipeline stages. Target submission expected following the PolMeth conference.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" style="background: var(--primary-color); padding: 3rem 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+            <div>
+                <p style="font-family: var(--font-display); font-size: 1.25rem; color: var(--hero-text); margin-bottom: 0.25rem;">Tom Bellens</p>
+                <p style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hero-muted); margin: 0;">University of Antwerp · Political Science</p>
+            </div>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="index.html" style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hero-muted);">Back to Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

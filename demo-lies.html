@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO-LIES | Tom Bellens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ── Project page overrides ── */
+        .project-hero {
+            min-height: 60vh;
+            padding-top: 8rem;
+            padding-bottom: 5rem;
+        }
+        .project-hero .hero-grain { opacity: 0.035; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+            margin-bottom: 2.5rem;
+            transition: color 0.2s, gap 0.2s;
+        }
+        .back-link:hover { color: var(--hero-text); gap: 0.75rem; }
+        .back-link i { font-size: 0.65rem; }
+
+        .project-hero h1 {
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            margin-bottom: 1rem;
+        }
+        .project-hero .subtitle {
+            font-size: 1.05rem;
+            color: var(--hero-muted);
+            max-width: 620px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-family: var(--font-main);
+            font-style: italic;
+        }
+        .project-hero .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+        .meta-pill i { color: var(--accent-color); font-size: 0.65rem; }
+
+        /* Stats bar */
+        .stats-bar {
+            background: var(--primary-color);
+            padding: 3rem 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-item {}
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            color: var(--hero-text);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--hero-muted);
+        }
+
+        /* WP cards */
+        .wp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .wp-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+        .wp-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+        .wp-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+        .wp-card p { font-size: 0.9rem; }
+        .wp-card ul {
+            margin: 0.75rem 0 0 1rem;
+            padding: 0;
+        }
+        .wp-card li {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        /* Corpus section */
+        .corpus-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .corpus-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .corpus-stat strong {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+        .corpus-stat span {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .country-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        .country-chip {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+
+        .dataset-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .dataset-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+        }
+        .dataset-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 140px;
+            font-size: 0.875rem;
+        }
+        .dataset-desc { color: var(--text-muted); }
+
+        /* Results graphs */
+        .graphs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .graph-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .graph-card img {
+            width: 100%;
+            display: block;
+        }
+        .graph-caption {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .graph-caption h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 400;
+        }
+        .graph-caption p {
+            font-size: 0.82rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Next steps */
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .step-item {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+        }
+        .step-num {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent-color);
+            letter-spacing: 0.1em;
+            padding-top: 0.2rem;
+            min-width: 28px;
+        }
+        .step-item p { font-size: 0.9rem; margin: 0; }
+        .step-item strong { color: var(--primary-color); }
+
+        /* Outputs */
+        .output-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1rem;
+        }
+        .output-icon {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            padding-top: 0.1rem;
+            flex-shrink: 0;
+        }
+        .output-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .output-card p { font-size: 0.875rem; margin: 0; }
+
+        /* Abstract toggle */
+        .abstract-toggle { margin-top: 0.75rem; }
+        .abstract-toggle summary {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            cursor: pointer;
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .abstract-toggle summary::before {
+            content: '▶';
+            font-size: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .abstract-toggle[open] summary::before { transform: rotate(90deg); }
+        .abstract-toggle p {
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .wp-grid { grid-template-columns: 1fr; }
+            .graphs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#education">CV</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero project-hero">
+        <div class="hero-grain"></div>
+        <div class="container">
+            <a href="index.html#projects" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            <h1>DEMO-LIES</h1>
+            <p class="subtitle">Deception in Democracy: Political Lying Accusations and Their Effects on Democratic
+                Citizenship</p>
+            <div class="meta-row">
+                <span class="meta-pill"><i class="fas fa-university"></i> University of Antwerp</span>
+                <span class="meta-pill"><i class="fas fa-award"></i> ERC</span>
+                <span class="meta-pill"><i class="fas fa-user"></i> PI: Maurits J. Meijers</span>
+                <span class="meta-pill"><i class="fas fa-calendar"></i> Jan 2026 – Jan 2029</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats bar -->
+    <div class="stats-bar animate-on-scroll">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Accusations Detected</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Years of Data</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">32K</div>
+                    <div class="stat-label">Individual Speakers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div class="animate-on-scroll" style="max-width: 760px;">
+                <span class="section-label">Project Overview</span>
+                <h2>About the Project</h2>
+                <p>DEMO-LIES is an ERC Starting Grant project hosted at the <strong>University of Antwerp</strong>,
+                    led by PI Maurits J. Meijers. The project studies the prevalence, nature, and determinants of
+                    political lying accusations in parliamentary debates, and examines how these accusations are
+                    perceived by citizens and what their consequences are for democratic attitudes and behaviour.</p>
+                <p>The project addresses four central questions across four work packages: mapping historical
+                    trends in lying accusations (WP1), identifying the political conditions under which accusations
+                    are made and by whom (WP2), studying citizen perceptions of lying allegations (WP3), and
+                    investigating the consequences for democratic citizenship (WP4).</p>
+                <p>As postdoctoral researcher on the project, my contribution centres on
+                    <strong>WP1</strong> and <strong>WP2</strong> — building the corpus of accusations and
+                    conducting the large-scale comparative analyses. WP3 and WP4 are being led by PhD students
+                    <strong>Marthe Verdegem</strong> and <strong>Simon McManus</strong>, who will investigate
+                    how citizens perceive accusations of political lying and what consequences those accusations
+                    carry for democratic trust and political engagement.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Contribution -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">My Contribution</span>
+            <h2 class="animate-on-scroll">WP1 &amp; WP2</h2>
+            <div class="wp-grid stagger-children">
+                <div class="wp-card">
+                    <span class="wp-label">Work Package 1</span>
+                    <h3>Building the Corpus</h3>
+                    <p>Using NLP and text-as-data methods, I am constructing the first large-scale, longitudinal
+                        dataset of lying accusations in parliamentary debates across 28 countries.</p>
+                    <ul>
+                        <li>Sourcing and harmonising parliamentary corpora across 6 major datasets</li>
+                        <li>Translation pipeline for non-English corpora using OPUS-MT / EasyNMT</li>
+                        <li>Applying the <em>LieLines</em> classifier for automated accusation detection</li>
+                        <li>Extracting accusation-level metadata: topics, targets, and context</li>
+                    </ul>
+                </div>
+                <div class="wp-card">
+                    <span class="wp-label">Work Package 2</span>
+                    <h3>Dynamics of Lying Accusations</h3>
+                    <p>Integrating corpus data with party- and context-level characteristics to study the political
+                        conditions under which accusations are made and by whom.</p>
+                    <ul>
+                        <li>Multilevel regression models at party-year and dyadic level</li>
+                        <li>Testing actor-level determinants: governing status, ideology, populism</li>
+                        <li>Studying context-level drivers: electoral systems, polarisation, competitiveness</li>
+                        <li>Matching accusations with fact-checking data to distinguish sincere from strategic
+                            accusations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Corpus -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Data Infrastructure</span>
+            <h2 class="animate-on-scroll">The Corpus</h2>
+            <div class="animate-on-scroll">
+                <p>The WP1 corpus is built by combining six parliamentary datasets, covering 28 countries over a
+                    timeline of at least 30 years where available. Across a base corpus of
+                    <strong>149 million sentences</strong>, the pipeline has so far detected over
+                    <strong>500,000 accusations of lying</strong> — making this the broadest comparative dataset
+                    of political deception in parliamentary speech ever assembled.</p>
+
+                <ul class="dataset-list">
+                    <li class="dataset-item">
+                        <span class="dataset-name">ParlaMint v5</span>
+                        <span class="dataset-desc">Gold-standard annotated corpus covering 20+ European countries.
+                            Serves as the reference point for the pipeline.</span>
+                    </li>
+                    <li class="dataset-item">
+                        <span class="dataset-name">ParlSpeech v2</span>
+                        <span class="dataset-desc">Extends geographic and temporal coverage for nine parliamentary
+                            democracies not fully covered by ParlaMint.</span>
+                    </li>
+                    <li class="dataset-item">
+                        <span class="dataset-name">Congressional Record</span>
+                        <span class="dataset-desc">All US congressional speeches from 1994–2024 (24.8M sentences),
+                            scraped using the Nicholas et al. parser.</span>
+                    </li>
+                    <li class="dataset-item">
+                        <span class="dataset-name">Australian Hansard</span>
+                        <span class="dataset-desc">Australian parliamentary debates 1998–2022 (7M sentences).</span>
+                    </li>
+                    <li class="dataset-item">
+                        <span class="dataset-name">Canadian Hansard</span>
+                        <span class="dataset-desc">Canadian parliamentary debates 1990–2019 (9.4M sentences).</span>
+                    </li>
+                    <li class="dataset-item">
+                        <span class="dataset-name">ItaParlCorpus</span>
+                        <span class="dataset-desc">High-quality Italian parliamentary corpus extending ParlaMint's
+                            short coverage of Italy back to 1992.</span>
+                    </li>
+                </ul>
+
+                <h3 style="margin-top: 2.5rem; font-size: 1.1rem;">Countries Covered</h3>
+                <div class="country-grid">
+                    <span class="country-chip">Australia</span>
+                    <span class="country-chip">Austria</span>
+                    <span class="country-chip">Belgium</span>
+                    <span class="country-chip">Bosnia &amp; Herzegovina</span>
+                    <span class="country-chip">Bulgaria</span>
+                    <span class="country-chip">Canada</span>
+                    <span class="country-chip">Croatia</span>
+                    <span class="country-chip">Czech Republic</span>
+                    <span class="country-chip">Denmark</span>
+                    <span class="country-chip">Estonia</span>
+                    <span class="country-chip">Finland</span>
+                    <span class="country-chip">France</span>
+                    <span class="country-chip">Germany</span>
+                    <span class="country-chip">Greece</span>
+                    <span class="country-chip">Hungary</span>
+                    <span class="country-chip">Iceland</span>
+                    <span class="country-chip">Italy</span>
+                    <span class="country-chip">Latvia</span>
+                    <span class="country-chip">Netherlands</span>
+                    <span class="country-chip">New Zealand</span>
+                    <span class="country-chip">Norway</span>
+                    <span class="country-chip">Poland</span>
+                    <span class="country-chip">Portugal</span>
+                    <span class="country-chip">Serbia</span>
+                    <span class="country-chip">Spain</span>
+                    <span class="country-chip">Sweden</span>
+                    <span class="country-chip">United Kingdom</span>
+                    <span class="country-chip">United States</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preliminary Results -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Early Findings</span>
+            <h2 class="animate-on-scroll">Preliminary Results</h2>
+            <p class="animate-on-scroll" style="max-width: 680px;">These are first results from the WP1 corpus.
+                They remain preliminary and are subject to further validation, but already reveal striking
+                cross-national and longitudinal patterns in the prevalence of lying accusations.</p>
+            <div class="graphs-grid animate-on-scroll">
+                <div class="graph-card">
+                    <img src="img/demo-lies-global.png" alt="Global LOWESS trend of lie accusation rate">
+                    <div class="graph-caption">
+                        <h4>Global Trend — LOWESS Smoothed</h4>
+                        <p>The proportion of sentences flagged as lying accusations across all 28 countries shows
+                            a notable spike around 2004, likely linked to debate around the Iraq War, followed by
+                            a gradual but steady rise from around 2015 onwards.</p>
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <img src="img/demo-lies-us.png" alt="US lie accusation rate LOWESS trend">
+                    <div class="graph-caption">
+                        <h4>United States — LOWESS Smoothed</h4>
+                        <p>The US shows a steeper incline from around 2015, with a sharp peak near 2020–2021.
+                            This may reflect rising partisan polarisation in the lead-up to and aftermath of the
+                            2016 election.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Steps -->
+    <section style="background: var(--bg-color);">
+        <div class="container">
+            <div style="max-width: 720px;" class="animate-on-scroll">
+                <span class="section-label">Roadmap</span>
+                <h2>Next Steps</h2>
+                <ul class="steps-list">
+                    <li class="step-item">
+                        <span class="step-num">01</span>
+                        <p><strong>Corpus validation</strong> — systematic validation of the LieLines classifier
+                            output through a collaborative annotation platform, combining manual review with
+                            automated quality checks.</p>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-num">02</span>
+                        <p><strong>Metadata collection on accusers and accused</strong> — leveraging the
+                            full-stack software and NLP tools developed during my PhD to automatically gather
+                            individual-level background data (education, career, party affiliation) on the
+                            politicians involved in each accusation.</p>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-num">03</span>
+                        <p><strong>WP2 analysis</strong> — once the corpus and metadata are validated, running
+                            the multilevel regression models to study the actor- and context-level determinants
+                            of political lying accusations across countries and over time.</p>
+                    </li>
+                    <li class="step-item">
+                        <span class="step-num">04</span>
+                        <p><strong>Dataset publication</strong> — publishing the WP1 corpus as an open-access
+                            dataset alongside a methods paper documenting the full pipeline.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outputs -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Outputs</span>
+            <h2 class="animate-on-scroll">First Outputs</h2>
+            <div class="animate-on-scroll">
+                <div class="output-card">
+                    <div class="output-icon"><i class="fas fa-file-alt"></i></div>
+                    <div>
+                        <h4>A Dataset of Political Lying Accusations in 28 Parliamentary Democracies</h4>
+                        <p><strong>Bellens, T.</strong> &amp; Meijers, M.J. — Working paper. Methodological
+                            appendix available. To be submitted to <em>Political Analysis</em>.</p>
+                    </div>
+                </div>
+                <div class="output-card">
+                    <div class="output-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div>
+                        <h4>Who Accuses Whom of Lying? A Relational Analysis of Political Lying Accusations
+                            Across 28 Parliamentary Democracies</h4>
+                        <p style="margin-bottom: 0.6rem;"><strong>ECPR General Conference 2026</strong> — Wrocław,
+                            Poland &nbsp;·&nbsp; Panel: <em>Radicals United? Transnational Strategies of Europe's
+                                Radical and Illiberal Right</em></p>
+                        <details class="abstract-toggle">
+                            <summary>Read abstract</summary>
+                            <p>Accusations of political lying have become ubiquitous in contemporary democratic
+                                discourse. Despite widespread claims that we live in an era of 'post-truth' politics,
+                                we lack systematic evidence about which political actors are accused of lying and,
+                                crucially, who makes these accusations. Existing research has focused on isolated
+                                instances of deception or relied on anecdotal evidence, leaving fundamental questions
+                                unanswered about the relational dynamics of lying accusations in parliamentary
+                                politics.</p>
+                            <p>This paper asks: <em>Which political actors are accused of political lying, and who are
+                                    the accusers?</em> We adopt a novel relational approach that examines not just
+                                targets or sources in isolation, but the dyadic relationships between accusers and
+                                the accused. We analyse parliamentary debates from 28 national parliaments using
+                                advanced NLP techniques to systematically identify lying accusations over time and
+                                across countries.</p>
+                            <p>We integrate insights from research on populism and negative campaigning to advance
+                                competing hypotheses. Regarding targets, we expect MPs from populist and governing
+                                parties to be disproportionately accused. Regarding sources, we hypothesise that MPs
+                                from populist, ideologically extreme, and opposition parties are most likely to make
+                                accusations, using them strategically to discredit mainstream "elite" politicians.
+                                Our relational approach further tests whether ideological distance and electoral
+                                asymmetries between party pairs predict accusation patterns. We employ multilevel
+                                regression models on party-year and dyadic party-pair data, incorporating party
+                                characteristics from established datasets (V-Party, ParlGov) measuring populism,
+                                ideology, governing status, and electoral performance.</p>
+                            <p>By revealing which actors dominate discourses of political deception across a wide
+                                range of democratic contexts, this research illuminates how accusations of dishonesty
+                                have become embedded in routine parliamentary behaviour — and what this tells us
+                                about political polarisation in contemporary democracy.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="contact" style="padding: 4rem 0;">
+        <footer>
+            <div class="container" style="text-align: center;">
+                <div class="social-links">
+                    <a href="mailto:tom.bellens@kuleuven.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/Tombellens" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/tombellens/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">&copy; 2026 Tom Bellens. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

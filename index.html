@@ -1,166 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tom Bellens - CV</title>
+    <title>Tom Bellens | Postdoc in Computational Political Science</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400&family=Helvetica:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="img/antwerp.png">
 </head>
+
 <body>
-<header>
-    <div class="header-content">
-        <h1>Tom Bellens</h1>
-        <div class="divider"></div>
-        <h4>
-            PhD Student at KU Leuven Public Governance Institute
-         <br>
-            Master's Student at Master of AI, KU Leuven
-        </h4>
-    </div>
-</header>
-<nav>
-    <ul>
-        <li><a href="#about">About Me</a></li>
-        <li><a href="#phd">PhD Project</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
 
-<section id="about">
-    <div class="about-content"></div>
-    <h2>About Me</h2>
-    <p>Hi, I'm Tom Bellens, a PhD candidate in Political Science at the KU Leuven Public Governance Institute, where I'm exploring the career trajectories of Belgian ministerial advisers. My dissertation, set for completion by 2025, focuses on how these advisers navigate their paths to ministerial office.
-
-        In addition, I'm pursuing a Master’s in Artificial Intelligence at KU Leuven, with a specialization in Speech and Language Technologies. Although this may seem unrelated to my PhD at first glance, the AI methodologies are a key complement to my research. By blending the analysis of political career paths with modern text-as-data techniques, I aim to bring new insights into the study of political elites.
-
-        This page serves as a technical CV, showcasing projects that intersect political science and natural language processing (NLP), offering a deeper look into the methods I'm applying to my research and beyond.</p>
-</section>
-
-<section id="phd">
-    <h2>PhD Project</h2>
-    <p>My PhD research centers on ministerial advisers and their career trajectories. These advisers, though unelected, are key political elites working directly for ministers. In the so-called Napoleonic systems of governance (such as France, Italy, Portugal, and Belgium), they hold particularly influential roles. Examining their career paths offers valuable insights into governance, politics, and societal structures.
-
-        Ministerial advisers make up a significant group within the political elite. Between 2000 and 2020 alone, we estimate that at least 3,000 to 4,000 individuals have served in this capacity. On average, each adviser holds 7 to 8 career positions, requiring us to gather and annotate data on between 21,000 and 32,000 career entries. To tackle this, we employ a range of innovative approaches, leveraging both traditional NLP techniques and more modern generative AI methods.
-
-        Ultimately, my PhD project aims to address not only the empirical gaps and theoretical questions surrounding ministerial advisers, but also to advance the broader field of elite background studies through various methodological innovations. You can explore more about my PhD project <a href="phd.html">here.</a></p>
-
-</section>
-
-<section id="projects">
-    <h2>Projects</h2>
-
-
-    <div class="project" onclick="toggleProject(1)">
-        <div id="project1-short">
-            <h3>CoRex project </h3>
-            <p>A platform for the collection and annotation of background information on a broad group of political and administrative elites in 52 countries.</p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#education">CV</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <div id="project1-details" class="project-details">
-            <h3>CoRex project (COST)</h3>
-            <p>In the context of a COST project called CoRex (), we developed an upgraded version of the lipar-platform. The CoRex
-                project aims to collect background data on political and administrative elites in 52 countries. The scope of this project
-                is extended on many axes compared to the first version. First of all, since this is an international collaboration many people need to work on this so we
-                imoroved the UI and general accesibility of the platform. Secondly, the number of variables has increased by a great number resulting in more time spent per
-                individual. Therefore we added more (AI-aided) tools that should facilitate and speed-up the data collection and annotation process.</p>
-            <p>A first important feature of this platform is an upgrade of the code-suggestions in the lipar platform. Where in lipar we manually trained and
-                deployed the fine-tuned model, the idea here is to make a smart system that decides when to retrain and deploy the fine-tuned models, based on the
-                available data. A second feature is a chat-function, that enables you to "chat" with the data.
-                The first X results of a search-engine query are passed on to a LLM. The LLM simultaneously passes on a message to the user
-                and JSON objects, which can go straight to the dataset. A third important feature is that database
-                updates will be semi-automated, in that sense that our smart scrapers based on earlier sources
-                and decision by the end-user will try to suggest updates to the dataset.</p>
-            <hr>
-            <p><em>Tools: Flask, Python, PostgreSQL, Fine-tuning, BERT, Prompting GPT4</em></p>
-        </div>
-    </div>
+    </nav>
 
-    <div class="project" onclick="toggleProject(2)">
-        <div id="project2-short">
-            <h3>Classifier Entropy for Detecting Partisan Content</h3>
-            <p>An experiment using classifier entropy to model the political-neutral axis, detecting partisan content in media articles about Flemish ministerial advisers.</p>
-        </div>
-        <div id="project2-details" class="project-details">
-            <h3>Classifier Entropy for Detecting Partisan Content</h3>
-            <p>This project began by training a BERT-based classifier using a labeled political corpus. The corpus included a wide range of media articles that were annotated based on their political orientation, ranging from highly partisan to politically neutral. This supervised learning approach allowed the model to capture distinct features within the text that signal partisan bias, with the final classifier fine-tuned to identify these characteristics in a structured and consistent way. The model learned to differentiate between politically charged and neutral language, effectively providing a reliable measure of the political leanings of a given text.</p>
-
-            <p>In the second step, we applied the trained classifier to a large corpus of unlabeled media articles specifically related to Flemish ministerial advisers. Instead of using direct classification, the focus was on the entropy of the classifier’s output layer—measuring the uncertainty in the model’s predictions for each article. Higher entropy values indicated more neutral or politically ambiguous content, while lower entropy pointed toward clearer partisan bias. By using entropy-based classification, this method provides a nuanced understanding of how media portray ministerial advisers, offering insight into both explicit political framing and subtler forms of bias.</p>
-            <hr>
-            <p><em>Tools: BERT, Python, TensorFlow, Pandas, Scikit-learn</em></p>
-        </div>
-    </div>
-
-    <div class="project" onclick="toggleProject(3)">
-        <div id="project3-short">
-            <h3>LinkedIn Parser</h3>
-            <p>A platform for the collection and social scientific annotation of LinkedIn CVs.</p>
-        </div>
-        <div id="project3-details" class="project-details">
-            <h3>LinkedIn Parser (lipar)</h3>
-            <p>This project developed the **lipar** platform, which automates the extraction and analysis of career data from LinkedIn profiles. In the first step, we used a web scraper to collect LinkedIn profiles of Flemish ministerial advisers (MAs) from 1999 to 2020, focusing on their educational and career backgrounds. Since LinkedIn does not provide an official API and scraping is restricted, each profile was manually retrieved, and the associated resumes were stored as PDFs. These PDFs were then parsed using PyPDF2 and a custom prompt passed to GPT-4 to structure the data into JSON format. The structured data included job titles, workplaces, start and end dates, and descriptions of the career roles for each adviser.</p>
-
-            <p>In the second phase, we implemented a process for cleaning and coding the collected data. The lipar platform merged career positions from different data sources, such as government records and LinkedIn profiles, to ensure consistency. This step required a combination of manual input and machine learning tools, including a fine-tuned BERT model, to assign labels to each career position. To expedite this process, we utilized a k-nearest neighbors algorithm, followed by a neural network model for classification. The end result was a fully coded dataset that provides a detailed overview of the career paths of Flemish MAs, which can be used for further research in political science and elite studies.</p>
-            <hr>
-            <p><em>Tools: Python, PyPDF2, GPT-4, PostgreSQL, Flask, BERT</em></p>
-        </div>
-    </div>
-        <div class="project" onclick="toggleProject(4)">
-            <div id="project4-short">
-                <h3>ParlTracker</h3>
-                <p>A platform that makes the day-to-day activities in the Belgian Parliament
-                    more accessible to the general public, using a suite of NLP tools.</p>
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-grain"></div>
+        <div class="container hero-inner">
+            <div class="hero-text">
+                <p class="hero-label">Researcher</p>
+                <h1>Tom<br>Bellens</h1>
+                <div class="hero-divider"></div>
+                <div class="hero-positions">
+                    <div class="position-item">
+                        <strong>Postdoc in Computational Political Science</strong>
+                        <span>University of Antwerp</span>
+                    </div>
+                    <div class="position-item">
+                        <strong>Research Associate</strong>
+                        <span>Oxford Computational Political Science Group</span>
+                    </div>
+                </div>
+                <div class="hero-social">
+                    <a href="mailto:tom.bellens@kuleuven.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/Tombellens" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/tombellens/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
             </div>
-            <div id="project4-details" class="project-details">
-                <h3>ParlTracker [IN DEVELOPMENT]</h3>
-                <p> This project is a work in progress and a first proof-of-concept still needs to be finished.
-                    The Belgian Parliament (Chamber of Representatives / Senate) publishes a lot of textual data on their website,
-                    such as full reports on the plenary sessions, commissions and votes. This platform aims to group and synthesize this
-                    information in such a way that the general public can easily learn what their representatives
-                    and political parties actually stand for in the legislature. We rely on a suite of NLP tools (topic-modelling,
-                    question-answering, ..) to make this work.</p>
+            <div class="hero-image-wrap">
+                <img src="img/tom.jpeg" alt="Tom Bellens">
             </div>
         </div>
+        <div class="scroll-hint">
+            <span>scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
 
-    </div>
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <div class="grid about-grid animate-on-scroll">
+                <div class="about-content">
+                    <span class="section-label">About</span>
+                    <h2>About Me</h2>
+                    <p>I work at the intersection of political science, public policy, and computational social science.
+                        I hold a PhD (2025) from <strong>KU Leuven</strong>, where I studied the career backgrounds of
+                        ministerial advisers through a text-as-data lens — research that took me to the
+                        <strong>MIT Gov Lab</strong> and the <strong>University of Nottingham</strong>. I also hold a
+                        Master's degree in Artificial Intelligence from <strong>KU Leuven</strong>, specialising in
+                        speech and language technology.</p>
+                    <p>I am currently a postdoctoral researcher at the <strong>University of Antwerp</strong>, working
+                        on <strong><em>DEMO-LIES</em></strong> — a large-scale project mapping accusations of lying in
+                        parliamentary debates across more than 20 countries using NLP and corpus methods.</p>
+                    <p>This site documents these projects and my broader work as a research associate at the
+                        <strong>Oxford Computational Political Science Group</strong> and as a contributor to the COST
+                        Action <strong>CoREx WG2</strong>, which is building the first comparative dataset and handbook
+                        on political and administrative elites.</p>
+                </div>
+                <div class="about-image">
+                    <img src="img/tom.jpeg" alt="Tom Bellens">
+                </div>
+            </div>
+        </div>
+    </section>
 
-</section>
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Research &amp; Projects</span>
+            <h2 class="animate-on-scroll">Projects</h2>
+            <p class="projects-intro animate-on-scroll">
+                A showcase of research and tools built at the intersection of Political Science and AI.
+            </p>
+            <div class="grid projects-grid stagger-children">
 
-<section id="education">
-    <h2>Education</h2>
+                <article class="project-card">
+                    <h3>DEMO-LIES</h3>
+                    <p class="project-desc">As a postdoctoral researcher at the University of Antwerp, I contribute to
+                        this ERC-funded project that maps accusations of lying in parliamentary debates across more than
+                        20 countries — combining large-scale text corpora with NLP classification to study democratic
+                        discourse at scale.</p>
+                    <div class="project-tags">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Parliamentary Debates</span>
+                        <span class="tag">Comparative Politics</span>
+                    </div>
+                    <a href="demo-lies.html" class="btn-link">View Project <i class="fas fa-arrow-right"></i></a>
+                </article>
 
-    <!-- Bachelor's and Master's in History -->
-    <div class="education-item">
-        <h3>Vrije Universiteit Brussel (VUB)</h3>
-        <p><strong>Bachelor's and Master's in History (2020)</strong></p>
-        <p>Master’s thesis on anti-Americanism in postwar Belgium.</p>
-    </div>
+                <article class="project-card">
+                    <h3>PhD Research: In and Out the Centre of Executive Power</h3>
+                    <p class="project-desc">My dissertation maps the career trajectories of Belgian ministerial
+                        advisers using NLP and text-as-data methods. By tracing the paths of hundreds of political
+                        elites, it sheds light on who gains access to executive power — and what their backgrounds
+                        reveal about the nature of ministerial cabinets in Belgium.</p>
+                    <div class="project-tags">
+                        <span class="tag">Political Science</span>
+                        <span class="tag">NLP</span>
+                        <span class="tag">Career Analysis</span>
+                    </div>
+                    <a href="phd.html" class="btn-link">View Project <i class="fas fa-arrow-right"></i></a>
+                </article>
 
-    <!-- Master's in AI at KU Leuven -->
-    <div class="education-item">
-        <h3>KU Leuven</h3>
-        <p><strong>Master's in Artificial Intelligence (Expected 2025)</strong></p>
-        <p>Relevant coursework: Machine Learning, NLP, Scripting Languages.</p>
-    </div>
-</section>
+                <article class="project-card">
+                    <h3>US Political Appointees (2004–2020)</h3>
+                    <p class="project-desc">Developed during a research stay at the MIT Gov Lab, this
+                        project extends the software built during my PhD to construct a background dataset of US
+                        presidential appointees between 2004 and 2020. Using LLM-powered tools, we automatically
+                        collected and structured data on their education and career trajectories from online
+                        sources.</p>
+                    <div class="project-tags">
+                        <span class="tag">US Politics</span>
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Automated Pipeline</span>
+                    </div>
+                    <a href="appointees.html" class="btn-link">View Project <i class="fas fa-arrow-right"></i></a>
+                </article>
 
-<section id="skills">
-    <h2>Skills</h2>
-    <ul>
-        <li>Python (Flask, Pandas, Transformers, Seaborne)</li>
-        <li>HTML/CSS/Typescript (Angular)</li>
-        <li>NLP</li>
-    </ul>
-</section>
+                <article class="project-card">
+                    <h3>LLMs for Career Data</h3>
+                    <p class="project-desc">Can LLMs reliably help us with collecting, extracting and annotating elite data? This project develops and evaluates LLM-based pipelines for automating career data
+                        collection and annotation — from web-scraping to structured classification — drastically
+                        reducing the cost of large-N elite studies.</p>
+                    <div class="project-tags">
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Career Analysis</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Elite Studies</span>
+                    </div>
+                    <a href="llms-career.html" class="btn-link">View Project <i class="fas fa-arrow-right"></i></a>
+                </article>
 
-<section id="contact">
-    <h2>Contact</h2>
-    <p>Email: &#116;&#111;&#109;&#46;&#98;&#101;&#108;&#108;&#101;&#110;&#115;&#64;&#107;&#117;&#108;&#101;&#117;&#118;&#101;&#110;&#46;&#99;&#111;&#109;</p>
-    <p>GitHub: <a href="https://github.com/Tombellens">github.com/Tombellens</a></p>
-</section>
+                <article class="project-card">
+                    <h3>Oxford Computational Political Science Group</h3>
+                    <p class="project-desc">As a Research Associate at the Oxford Computational Political Science
+                        Group, I contribute to a project benchmarking LLMs for the classification of parliamentary
+                        speech. We systematically test a range of models across multiple corpora to understand how
+                        well LLMs perform on annotation tasks in parliamentary data.</p>
+                    <div class="project-tags">
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Benchmarking</span>
+                        <span class="tag">Parliamentary Data</span>
+                    </div>
+                    <a href="https://ocpsg-benchmarking-llms.github.io" class="btn-link">View Project <i class="fas fa-arrow-right"></i></a>
+                </article>
 
-<script src="app.js"></script>
+                <article class="project-card project-card--upcoming">
+                    <div class="upcoming-badge">In Progress</div>
+                    <h3>Synthetic Political Agents</h3>
+                    <p class="project-desc">Exploring evidence-informed RAG architectures to build political digital
+                        twins — synthetic agents that simulate the behaviour and reasoning of real political actors
+                        based on their documented careers and positions. To be presented at APSA 2026.</p>
+                    <div class="project-tags">
+                        <span class="tag">RAG</span>
+                        <span class="tag">LLMs</span>
+                        <span class="tag">Political Simulation</span>
+                        <span class="tag">Agents</span>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications">
+        <div class="container">
+            <span class="section-label animate-on-scroll">Academic Output</span>
+            <h2 class="animate-on-scroll">Publications</h2>
+
+            <ul class="pub-list animate-on-scroll">
+
+                <li class="pub-section-header"><span>Published &amp; In Press</span></li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2026</span>
+                        <span class="pub-venue">Palgrave</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Pathways to Power: Careers in the Executive Triangle Across Modern Political Systems</h3>
+                        <p>Meyer-Sahling, J., Veit, S., Squevin, P., Bellon, A., <strong>Bellens, T.</strong>,
+                            Demirelli, L., Toth, F. — <em>Comparative Evidence from 34 Countries Worldwide</em>.
+                            Palgrave McMillan.</p>
+                        <ul class="pub-chapters">
+                            <li class="pub-chapter">
+                                <span class="chapter-tag">Chapter</span>
+                                <span><em>United States</em> — <strong>Bellens, T.</strong>, Chen, L.</span>
+                            </li>
+                            <li class="pub-chapter">
+                                <span class="chapter-tag">Chapter</span>
+                                <span><em>Belgium</em> — <strong>Bellens, T.</strong>, Van de Sande, A.,
+                                    Brans, M.</span>
+                            </li>
+                            <li class="pub-chapter">
+                                <span class="chapter-tag">Chapter</span>
+                                <span><em>United Kingdom</em> — Meyer-Sahling, J., Leach, N.,
+                                    <strong>Bellens, T.</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                    <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">PSR</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Stepping Stones or Party Placements? An LLM-based Ranking Algorithm of Ministerial
+                            Advisers' Post-Cabinet Careers</h3>
+                        <p><strong>Bellens, T.</strong>, Meert, A., Brans, M. — <em>Political Studies Review</em>.doi: &nbsp;<a href="https://doi.org/10.1177/14789299261444150"
+                                target="_blank">10.1177/14789299261444150</a></p>
+                    </div>
+                </li>
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2026</span>
+                        <span class="pub-venue">Oxford Handbooks</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Ministerial Cabinets and Their Advisers in Belgium</h3>
+                        <p>Meert, A., Goransson, M., <strong>Bellens, T.</strong>, Brans, M. — <em>The Oxford
+                                Handbook of Belgian Politics</em>, Reuchamps et al. (Eds.). Oxford Academic.
+                            doi:&nbsp;<a href="https://doi.org/10.1093/oxfordhb/9780198914754.013.0022"
+                                target="_blank">10.1093/oxfordhb/9780198914754.013.0022</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">EPS</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>A Career Dataset of Flemish Ministerial Advisors (1999–2020) Leveraging Online Data
+                            Sources</h3>
+                        <p><strong>Bellens, T.</strong>, Bellens, J., Brans, M. — <em>European Political
+                                Science</em>. doi:&nbsp;<a href="https://doi.org/10.1057/s41304-025-00526-8"
+                                target="_blank">10.1057/s41304-025-00526-8</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">PLC</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Resources and Ideology in Ministerial Adviser Recruitment: A Dynamic Model of Flemish
+                            Ministerial Cabinets (1999–2020)</h3>
+                        <p><strong>Bellens, T.</strong>, Brans, M. — <em>Politics of the Low Countries</em>.
+                            doi:&nbsp;<a href="https://doi.org/10.54195/plc.21498"
+                                target="_blank">10.54195/plc.21498</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2023</span>
+                        <span class="pub-venue">Governance</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>The Prime Minister's Chief of Staff: Comparing Profiles and Trends in Westminster
+                            Democracies, 1990–2021</h3>
+                        <p>Pickering, H., <strong>Bellens, T.</strong>, Brans, M. — <em>Governance</em>.
+                            doi:&nbsp;<a href="https://doi.org/10.1111/gove.12834"
+                                target="_blank">10.1111/gove.12834</a></p>
+                    </div>
+                </li>
+
+                <li class="pub-section-header"><span>Working Papers</span></li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2026</span>
+                        <span class="pub-venue">Working Paper</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Benchmarking LLMs for the Automated Extraction of Career Data</h3>
+                        <p><strong>Bellens, T.</strong>, González-Bustamante, B., Demirelli, L., Meyer-Sahling, J.,
+                            Toth, F.</p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2026</span>
+                        <span class="pub-venue">Working Paper</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Benchmarking LLMs for the Annotation of Parliamentary Data</h3>
+                        <p>González-Bustamante, B., Koch, M., Klam, C., <strong>Bellens, T.</strong></p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">Working Paper</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>A Dataset of US Presidential Appointees in the 21st Century Built Using a Fully Automated
+                            NLP Pipeline</h3>
+                        <p><strong>Bellens, T.</strong>, Chen, L. (MIT Gov Lab)</p>
+                    </div>
+                </li>
+
+                <li class="pub-item">
+                    <div class="pub-meta">
+                        <span class="pub-year">2025</span>
+                        <span class="pub-venue">Working Paper</span>
+                    </div>
+                    <div class="pub-content">
+                        <h3>Draining the Swamp or Filling It? Presidential Appointments in the U.S. and Populism</h3>
+                        <p><strong>Bellens, T.</strong>, Chen, L. (MIT Gov Lab) — To be submitted at <em>American Journal of
+                                Political Science</em>.</p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </section>
+
+    <!-- Education & Skills -->
+    <section id="education">
+        <div class="container">
+            <div class="grid edu-skills-grid">
+
+                <div class="animate-on-scroll">
+                    <span class="section-label">Academic Background</span>
+                    <h2>Education</h2>
+
+                    <div class="education-item">
+                        <span class="edu-year">2025</span>
+                        <h3>PhD in Political Science</h3>
+                        <p><strong>KU Leuven</strong></p>
+                        <p>Career trajectories of Belgian ministerial advisers using text-as-data and NLP methods.</p>
+                    </div>
+
+                    <div class="education-item">
+                        <span class="edu-year">2025</span>
+                        <h3>Master's in Artificial Intelligence</h3>
+                        <p><strong>KU Leuven</strong></p>
+                        <p>Specialization: Speech and Language Technologies.</p>
+                    </div>
+
+                    <div class="education-item">
+                        <span class="edu-year">2020</span>
+                        <h3>Master's in History</h3>
+                        <p><strong>Vrije Universiteit Brussel (VUB)</strong></p>
+                        <p>Thesis on anti-Americanism in postwar Belgium.</p>
+                    </div>
+                </div>
+
+                <div class="skills-section animate-on-scroll">
+                    <span class="section-label">Technical Expertise</span>
+                    <h2>Skills</h2>
+                    <div class="skills-container">
+                        <span class="skill-badge">Python</span>
+                        <span class="skill-badge">Flask</span>
+                        <span class="skill-badge">Pandas / NumPy</span>
+                        <span class="skill-badge">PyTorch / TensorFlow</span>
+                        <span class="skill-badge">Transformers (HuggingFace)</span>
+                        <span class="skill-badge">HTML5 / CSS3</span>
+                        <span class="skill-badge">JavaScript / TypeScript</span>
+                        <span class="skill-badge">Angular</span>
+                        <span class="skill-badge">PostgreSQL</span>
+                        <span class="skill-badge">Git</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <footer>
+            <div class="container">
+                <span class="section-label">Say Hello</span>
+                <h2>Get in Touch</h2>
+                <p>Interested in my research or collaboration? Feel free to reach out.</p>
+                <div class="social-links">
+                    <a href="mailto:tom.bellens@kuleuven.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/Tombellens" target="_blank" aria-label="GitHub"><i
+                            class="fab fa-github"></i></a>
+                    <a href="https://be.linkedin.com/in/tom-bellens-97189a62" target="_blank" aria-label="LinkedIn"><i
+                            class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">&copy; 2026 Tom Bellens. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </section>
+
+    <script src="app.js"></script>
 </body>
+
 </html>

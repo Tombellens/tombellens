@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO-LIES Project | Tom Bellens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">Tom Bellens</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#education">CV</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" style="padding: 6rem 0 4rem;">
+        <div class="container">
+            <h1>DEMO-LIES Project</h1>
+            <p class="hero-subtitle">
+                Detecting Erosion of Democratic Norms via Language Analysis
+            </p>
+        </div>
+    </header>
+
+    <!-- Intro Grid -->
+    <section id="intro">
+        <div class="container">
+            <div class="grid about-grid" style="align-items: start;">
+                <div class="about-content">
+                    <h2>Project Overview</h2>
+                    <p>The DEMO-LIES project investigates subtle forms of democratic erosion by analyzing political
+                        discourse. Using advanced Natural Language Processing (NLP), we aim to detect partisan bias,
+                        misinformation, and rhetoric that undermine democratic institutions.</p>
+                    <p>My contribution involves developing NLP models to identify these linguistic markers in large
+                        corpora of political texts, speeches, and media articles.</p>
+                </div>
+                <div class="phd-preview">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem; display: flex; align-items: flex-start;">
+                            <i class="fas fa-check-circle"
+                                style="color: var(--accent-color); margin-top: 5px; margin-right: 10px;"></i>
+                            <div><strong>Advanced NLP</strong> Techniques</div>
+                        </li>
+                        <li style="margin-bottom: 1rem; display: flex; align-items: flex-start;">
+                            <i class="fas fa-check-circle"
+                                style="color: var(--accent-color); margin-top: 5px; margin-right: 10px;"></i>
+                            <div><strong>Bias Detection</strong> in Media</div>
+                        </li>
+                        <li style="margin-bottom: 1rem; display: flex; align-items: flex-start;">
+                            <i class="fas fa-check-circle"
+                                style="color: var(--accent-color); margin-top: 5px; margin-right: 10px;"></i>
+                            <div><strong>Tech Stack:</strong> TensorFlow, Pandas, Scikit-learn</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" style="background-color: white;">
+        <div class="container">
+            <h2>Key Research Areas</h2>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: 2rem; gap: 2rem;">
+                <div style="background: var(--bg-color); padding: 2rem; border-radius: var(--radius-md);">
+                    <h3>Partisan Bias Detection</h3>
+                    <p>Using classifier entropy and fine-tuned BERT models to measure uncertainty and bias in political
+                        news articles.</p>
+                </div>
+                <div style="background: var(--bg-color); padding: 2rem; border-radius: var(--radius-md);">
+                    <h3>Framing Analysis</h3>
+                    <p>Investigating how different political actors frame key issues to influence public opinion and
+                        policy debates.</p>
+                </div>
+                <div style="background: var(--bg-color); padding: 2rem; border-radius: var(--radius-md);">
+                    <h3>Democratic Norm Erosion</h3>
+                    <p>Tracking the use of rhetoric that challenges democratic norms, such as attacking the legitimacy
+                        of opponents or institutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="social-links">
+                <a href="mailto:tom.bellens@kuleuven.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/Tombellens"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/tombellens/"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 2rem;">
+                &copy; 2026 Tom Bellens.
+            </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
